@@ -108,11 +108,7 @@ class Net(nn.Module):
 
         self.mxp5 = maxpool2d.cMaxPool2d((2, 2), (2, 2))
         self.relu = relu.cReLu()        
-        # in_feature = 512*oH*oW
-        # self.flat = nn.Flatten()
-        # self.fc1 = nn.Linear(in_feature, 4096, bias=False)  # 2G word even for 1kx1k  | 200G word or 10Kx10K. No GPU works
-        # self.fc2 = nn.Linear(4096, 4096, bias=False)
-        # self.fc3 = nn.Linear(4096, 1000, bias=False)
+     
 
 
         self.avgp = nn.AvgPool2d(oH, stride=1)
@@ -123,12 +119,8 @@ class Net(nn.Module):
 
         self.tsplit = tilesplit.TiledSplit()
         self.tcopy = tilecopy.TiledCopy()
-        # self.block1 = sequential.mSequential(*[self.tsplit, self.conv2d_1, self.conv2d_2, self.mxp1, \
-        #                                         self.conv2d_3,  self.conv2d_4, self.mxp2,  \
-        #                                         self.conv2d_5, self.conv2d_6, self.conv2d_7, self.mxp3, \
-        #                                         self.conv2d_8, self.conv2d_9, self.conv2d_10, self.mxp4, \
-        #                                         self.conv2d_11, self.conv2d_12, self.conv2d_13, self.mxp5,  
-        #                                         ]) #
+
+
         self.block1 = sequential.mSequential(*[self.tsplit, self.conv2d_1, self.relu, self.conv2d_2, self.relu,self.mxp1, \
                                                 self.conv2d_3, self.relu, self.conv2d_4, self.relu, self.mxp2,  \
                                                 self.conv2d_5, self.relu, self.conv2d_6, self.relu, self.conv2d_7, self.relu, self.mxp3, \
@@ -181,19 +173,10 @@ def main():
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     memUsage = memory.MeasureMemory(device)
-    #print("\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n")
-    # print("==== real init ...")
-    # our_initmem = memUsage.currentValue()
-    # print(memory.MemSize(our_initmem))     
-    # print(memUsage.available())
+  
 
     model = Net().to(device)
-    #print("\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n")
-
-    # print("==== our init ...")
-    # our_initmem = memUsage.currentValue()
-    # print(memory.MemSize(our_initmem))     
-    # print(memUsage.available())
+  
 
 
     ref_elapsed_fwd = 0
@@ -210,12 +193,6 @@ def main():
         ref_elapsed_fwd += (ref_fwd_done - local_start)
 
 
-        # print("==== ref_fwd done ...")
-        # ref_fwd_use = memUsage.currentValue()-our_initmem
-        # print(memory.MemSize(ref_fwd_use) )    
-        # print("avail ref",memUsage.available())
-        # print("max ref", memUsage.maxx(), memUsage.maximumValue())
-
         loss = criterion(out, labels)
         loss.backward()
         torch.cuda.synchronize()
@@ -229,15 +206,6 @@ def main():
     print("\n&& {}, {}, {}\n".format(ref_elapsed_fwd, ref_elapsed_bwk, ref_elapsed_total) )
     
 
-
-    # print("==== our_bwd done ...")
-    # our_bwd_use = memUsage.currentValue()-our_fwd_use
-    # our_bwd_use_total = memUsage.currentValue()-our_initmem
-    # print("our_bwd_use", memory.MemSize(our_bwd_use))   
-    # print("our_bwd_use t", memory.MemSize(our_bwd_use_total))    
-    # print("avail our",memUsage.available())
-    # print("max our", memUsage.maxx(), memUsage.maximumValue())
-    #print("input graad", input.grad[0,0,0,17])
 
 import sys
 

@@ -422,7 +422,7 @@ import time
 
 def main():
     torch.set_printoptions(profile="full")
-    torch.set_default_dtype(torch.float32)
+    torch.set_default_dtype(torch.float64)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = Net().to(device)
 
