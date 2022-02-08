@@ -21,13 +21,22 @@ export PYTHONPATH=$UU
 You have to build the code with cuda and cudnn enabled. We currently do not support cpu or no-cudnn operators.
 
 5) Here is the code structure:
-uu/benchmarking := It contains all benckmarks python files and bash script to generate data for plotting fig 8 in paper;
-                   It has 2 CNN networks and comparison codes(default pytorch and pytorch-checkpoint); 
-                   It also has 2 correctness check python files to ensure that our work(SFT) produces exact same output tensor after forward pass and gradient tensors after backpropogation for each conv2d layers.
+uu/benchmarking := It contains all benckmarks python files and bash script to generate data for plotting fig 8 in paper;It has 2 CNN networks and comparison codes(default pytorch and pytorch-checkpoint); It also has 2 correctness check python files to ensure that our work(SFT) produces exact same output tensor after forward pass and gradient tensors after backpropogation for each conv2d layers.
 uu/layers := Our customized operators.
 uu/utils := Some dependencies file of SFT.
 
 6) How to extend SFT to other models:
 I use "vgg-16-our.py" as an exmaple template to explain how we implemnt SFT to a CNN network.
+a) cnn network define:
+Line 15-129: Define a CNN network by using our customized operators(e.g. conv2d.TiledConv2d, maxpool2d.cMaxPool2d). ALl argument of the customized operators are closed to default nn operators. Our work relies on recomputaion to save GPU device memory. The recomputation segments are defined in a "sequential.mSequential" structure in Line 124.
+
+b) define network forward computation:
+In our work, we split a huge input image into multiple some pieces and execute smaller input one by one. The general structure is Line 140-160. Since we need to gather output after loop structure, we difine an empty output tensor before loop structure in Line 138 and the shape is infered by Line 134 based on the segment structure defined in a).
+You can connect any other default torch.nn oeprator after our network like in Line 161-164.
+
+c) The general forward and backward process is same as defualt pytorch code. It is defined in main() function in Line 168-206.
+
+
+
 
 
