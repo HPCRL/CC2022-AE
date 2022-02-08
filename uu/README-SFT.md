@@ -2,7 +2,7 @@ Prerequisite: gcc >=8.5.0; cuda_11.3.0; cudnn v8.2.0;
 
 
 1) Get source code:<br />
-git clone --recursive https://github.com/HPCRL/CC2022-AE.git cc-ae. <br />
+git clone --recursive https://github.com/HPCRL/SFT-CC2022-AE cc-ae. <br />
 cd cc-ae <br />
 git submodule sync <br />
 git submodule update --init --recursive <br />
@@ -20,7 +20,7 @@ export PYTHONPATH=$UU <br /><br />
 You have to build the code with cuda and cudnn enabled. We currently do not support cpu or no-cudnn operators.
 
 5) Here is the code structure:<br />
-uu/benchmarking := It contains all benckmarks python files and bash script to generate data for plotting fig 8 in paper;It has 2 CNN networks and comparison codes(default pytorch and pytorch-checkpoint); It also has 2 correctness check python files to ensure that our work(SFT) produces exact same output tensor after forward pass and gradient tensors after backpropogation for each conv2d layers.<br />
+uu/benchmarking := It contains all benckmarks python files and bash script to generate data for plotting fig 8 in paper; It has 2 CNN networks and comparison codes(default pytorch and pytorch-checkpoint); It also has 2 correctness check python files to ensure that our work(SFT) produces exact same output tensor after forward pass and gradient tensors after backpropogation for each conv2d layers. We also put raw timing data and organized data in two subfolders /date-file and /plot-csv seperately. <br />
 uu/layers := Our customized operators.<br />
 uu/utils := Some dependencies file of SFT.
 
