@@ -2,7 +2,7 @@ Prerequisite: gcc >=8.5.0; cuda_11.3.0; cudnn v8.2.0;
 
 
 1) Get source code
-git clone --recursive … cc-ae.
+git clone --recursive https://github.com/HPCRL/CC2022-AE.git cc-ae.
 cd cc-ae
 git submodule sync
 git submodule update --init --recursive
