@@ -1,13 +1,13 @@
 Prerequisite: gcc >=8.5.0; cuda_11.3.0; cudnn v8.2.0;
 
 
-1) Get source code<br />
+1) Get source code:<br />
 git clone --recursive https://github.com/HPCRL/CC2022-AE.git cc-ae. <br />
 cd cc-ae <br />
 git submodule sync <br />
 git submodule update --init --recursive <br />
 
-2) Create a conda virtual environment and dependencies <br />
+2) Create a conda virtual environment and dependencies:<br />
 conda install numpy ninja pyyaml mkl mkl-include setuptools cmake cffi typing_extensions future six requests dataclasses<br />
 conda install psutil
 
@@ -25,7 +25,7 @@ uu/layers := Our customized operators.<br />
 uu/utils := Some dependencies file of SFT.
 
 6) How to extend SFT to other models:<br />
-I use "vgg-16-our.py" as an exmaple template to explain how we implemnt SFT to a CNN network.
+I use "vgg-16-our.py" as an exmaple template to explain how we implemnt SFT to a CNN network.<br />
 a) cnn network define:<br />
 Line 15-129: Define a CNN network by using our customized operators(e.g. conv2d.TiledConv2d, maxpool2d.cMaxPool2d). ALl argument of the customized operators are closed to default nn operators. Our work relies on recomputaion to save GPU device memory. The recomputation segments are defined in a "sequential.mSequential" structure in Line 124.<br />
 b) define network forward computation:<br />
