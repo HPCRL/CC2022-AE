@@ -2,7 +2,7 @@ Prerequisite: gcc >=8.5.0; cuda_11.3.0; cudnn v8.2.0;
 
 
 1) Get source code:<br />
-git clone --recursive https://github.com/HPCRL/CC2022-AE.git cc-ae. <br />
+git clone --recursive https://github.com/HPCRL/SFT-CC2022-AE cc-ae. <br />
 cd cc-ae <br />
 git submodule sync <br />
 git submodule update --init --recursive <br />
