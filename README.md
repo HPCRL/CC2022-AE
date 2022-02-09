@@ -14,7 +14,8 @@ conda install psutil
 3) Build Pytorch from source code:<br /> 
 python setup.py develop <br /> 
 If you encounter compilation issues on building pytorch, please also read pytorch defualt README. <br /> 
-https://github.com/HPCRL/SFT-CC2022-AE/blob/main/README-pytorch.md
+https://github.com/HPCRL/SFT-CC2022-AE/blob/main/README-pytorch.md <br /> 
+If you encounter gcc compiler internal error, it is highly possible caused by no enough RAM, please reduce number of jobs in compilation by set MAX_JOBS to a smaller number.
 
 4) Set environment to use uu package:<br />
 export UU= [your folder path]/cc-ae   <br />
